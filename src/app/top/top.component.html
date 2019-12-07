@@ -1,0 +1,14 @@
+<div>
+    <input type="file" accept="image/*" multiple [formControl]="file" (change)="change($event)" #fileInput>
+    <output>
+        <img *ngFor="let img of imgList" [src]="img.src">
+    </output>
+</div>
+    
+ <div>
+    <button type="button" (click)="upload()">UPLOAD</button>
+</div>
+<div>
+    ResponseImge
+    <img *ngIf="imageBlobUrl" [src]="imageBlobUrl">
+</div>
