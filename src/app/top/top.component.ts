@@ -52,19 +52,17 @@ export class TopComponent implements OnInit {
           src: result
         });
 
+        this.createImageFromBlob(file);
+
         this.fileApiService.postImage(file)
         .subscribe((val) => {
+          console.log('recv:' + val);
+          console.log('type' + typeof(val));
           this.createImageFromBlob(val);
         },
         () => {
-          console.log('POST - getThumbnail - observable is now completed.');
+          console.log('POST - observable is now completed.');
         });
-
-        // console.log('return:' + image);
-        // const url = window.URL.createObjectURL(image);
-        // console.log('url' + url);
-        // this.imageBlobUrl = this.sanitizer.bypassSecurityTrustUrl(url);
-        // console.log('imageBlobUrl' + this.imageBlobUrl);
       };
 
       // バイナリデータのまま読み込むメソッド
@@ -72,33 +70,33 @@ export class TopComponent implements OnInit {
     });
   }
 
-  upload() {
-      Array.prototype.forEach.call(this.fileInput.nativeElement.files, (file: File) => {
-        console.log('upload file:' + file);
-        const reader = new FileReader();
-        const data = {
-          operation: file.name,
-          base64Image: reader.readAsBinaryString(file)
-        };
-        this.fileApiService.postImage(file)
-        .subscribe((val) => {
-          this.createImageFromBlob(val);
-        },
-        response => {
-          console.log('POST - getThumbnail - in error', response);
-        },
-        () => {
-          console.log('POST - getThumbnail - observable is now completed.');
-        });
-        console.log('success');
-      });
-  }
+  // upload() {
+  //     Array.prototype.forEach.call(this.fileInput.nativeElement.files, (file: File) => {
+  //       console.log('upload file:' + file);
+  //       const reader = new FileReader();
+  //       const data = {
+  //         operation: file.name,
+  //         base64Image: reader.readAsBinaryString(file)
+  //       };
+  //       this.fileApiService.postImage(file)
+  //       .subscribe((val) => {
+  //         this.createImageFromBlob(val);
+  //       },
+  //       response => {
+  //         console.log('POST - getThumbnail - in error', response);
+  //       },
+  //       () => {
+  //         console.log('POST - getThumbnail - observable is now completed.');
+  //       });
+  //       console.log('success');
+  //     });
+  // }
 
   createImageFromBlob(image: Blob) {
     const reader = new FileReader();
     reader.addEventListener('load', () => {
       this.imageBlobUrl = reader.result;
-      console.log(this.imageBlobUrl);
+      console.log('imageBlobURL:' + this.imageBlobUrl);
     }, false);
     if (image) {
       reader.readAsDataURL(image);
