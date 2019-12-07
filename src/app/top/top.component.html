@@ -8,3 +8,7 @@
  <div>
     <button type="button" (click)="upload()">UPLOAD</button>
 </div>
+<div>
+    ResponseImge
+    <img *ngIf="imageBlobUrl" [src]="imageBlobUrl">
+</div>
